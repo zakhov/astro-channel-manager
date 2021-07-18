@@ -2,6 +2,9 @@
   "name": "astro-channel-manager",
   "version": "0.1.0",
   "private": true,
+  "author": "Zaki Hanafiah",
+  "homepage": "https://zakhov.com",
+  "license": "MIT",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
@@ -52,5 +55,16 @@
     "husky": "^7.0.1",
     "prettier": "^2.3.2",
     "pretty-quick": "^3.1.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --quiet --fix",
+      "pretty-quick --staged"
+    ]
   }
 }
