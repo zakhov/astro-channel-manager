@@ -1,7 +1,9 @@
 import * as React from 'react'
 import { Box, Grid, Text } from 'grommet'
+import { getDateTime } from 'helpers'
 
-const ChannelSchedule: React.FC<TChannelScheduleProps> = ({
+const ChannelScheduleItem: React.FC<TProgramProps> = ({
+    index,
     datetime,
     title,
 }) => {
@@ -14,7 +16,13 @@ const ChannelSchedule: React.FC<TChannelScheduleProps> = ({
             gap="small"
         >
             <Box gridArea="date">
-                <Text>{datetime ?? 'N/A'}</Text>
+                <Text>
+                    {index === 0
+                        ? 'On Now'
+                        : datetime
+                        ? getDateTime(datetime).time
+                        : 'N/A'}
+                </Text>
             </Box>
             <Box gridArea="title">
                 <Text>{title ?? 'No Information Available'}</Text>
@@ -23,9 +31,10 @@ const ChannelSchedule: React.FC<TChannelScheduleProps> = ({
     )
 }
 
-type TChannelScheduleProps = {
-    datetime: string
-    title: string
+type TProgramProps = {
+    index?: number
+    datetime?: string
+    title?: string
 }
 
-export default ChannelSchedule
+export default ChannelScheduleItem

@@ -21,13 +21,10 @@ const Home: React.FC = () => {
         <Box pad="small" width="xxlarge">
             <Grid
                 columns={{
-                    count: size === 'small' || size === 'medium' ? 1 : 3,
-                    size:
-                        size === 'small' || size === 'medium'
-                            ? '100%'
-                            : 'small',
+                    count: size === 'small' ? 1 : 3,
+                    size: size === 'small' ? '100%' : 'small',
                 }}
-                gap="large"
+                gap="medium"
             >
                 {channels_list.map((channel: any, index: number) => (
                     <ChannelCard
