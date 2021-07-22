@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useHistory } from 'react-router-dom'
 import { Box, Card, CardHeader, CardBody, Image, Text } from 'grommet'
 import ChannelScheduleItem from './channel-schedule-item'
 
@@ -9,12 +10,13 @@ const ChannelCard: React.FC<TChannelCardProps> = ({
     imageUrl,
     currentSchedule,
 }) => {
+    const history = useHistory()
     const selectChannel = (
         event: React.MouseEvent<HTMLElement>,
         id: number
     ) => {
         event.preventDefault()
-        console.log('channel selected:', id)
+        history.push(`/channel/CH${stbNumber}:${id}`)
     }
 
     const schedule = currentSchedule.slice(0, 3)
@@ -58,7 +60,9 @@ const ChannelCard: React.FC<TChannelCardProps> = ({
                             .map(() => (
                                 <ChannelScheduleItem
                                     // generate random number as key
-                                    key={Math.random().toString(6).substr(2, 4)}
+                                    key={Math.random()
+                                        .toString(24)
+                                        .substr(2, 4)}
                                     index={undefined}
                                     datetime={undefined}
                                     title={undefined}

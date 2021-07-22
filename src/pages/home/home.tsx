@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Box, Grid, InfiniteScroll, ResponsiveContext } from 'grommet'
 import ChannelCard from 'components/channel-card'
-import ChannelFilter from 'components/channel-filter/channel-filter'
+import ChannelFilter from 'components/channel-sort/channel-sort'
 import { fetchData, sortChannels, filteredSearch } from 'helpers'
 import { ALL_CHANNELS } from 'config'
 import ChannelSearch from 'components/channel-search/channel-search'

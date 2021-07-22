@@ -4,10 +4,11 @@ import { getDateTime } from 'helpers'
 
 const ChannelScheduleItem: React.FC<TProgramProps> = ({
     index,
+    is_live,
     datetime,
     title,
 }) => {
-    const is_first_item = index && index > 0
+    const subsequent_program = is_live && index && index > 0
     return (
         <Grid
             fill
@@ -18,10 +19,15 @@ const ChannelScheduleItem: React.FC<TProgramProps> = ({
         >
             <Box gridArea="date">
                 <Text
-                    weight={!is_first_item ? 'bold' : 300}
-                    color={is_first_item ? 'text-xweak' : 'text-strong'}
+                    weight={!subsequent_program ? 500 : 300}
+                    color={
+                        subsequent_program || !datetime || !is_live
+                            ? 'text-xweak'
+                            : 'text-strong'
+                    }
+                    size="small"
                 >
-                    {index === 0
+                    {index === 0 && is_live
                         ? 'On Now'
                         : datetime
                         ? getDateTime(datetime).time
@@ -29,7 +35,20 @@ const ChannelScheduleItem: React.FC<TProgramProps> = ({
                 </Text>
             </Box>
             <Box gridArea="title">
-                <Text color={is_first_item ? 'text-xweak' : 'text-strong'}>
+                <Text
+                    style={{
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                    }}
+                    weight={!subsequent_program ? 500 : 300}
+                    color={
+                        subsequent_program || !title || !is_live
+                            ? 'text-xweak'
+                            : 'text-strong'
+                    }
+                    size="small"
+                >
                     {title ?? 'No Information Available'}
                 </Text>
             </Box>
@@ -37,8 +56,13 @@ const ChannelScheduleItem: React.FC<TProgramProps> = ({
     )
 }
 
+ChannelScheduleItem.defaultProps = {
+    is_live: true,
+}
+
 type TProgramProps = {
     index?: number
+    is_live?: boolean
     datetime?: string
     title?: string
 }

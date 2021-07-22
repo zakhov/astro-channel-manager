@@ -6,12 +6,17 @@ export const fetchData = async (url: string): Promise<void> => {
     return data.response
 }
 
+export const isSameDay = (dateTime: string) => {
+    return (dayjs().format('ddd') === getDateTime(dateTime).day
+        ? 'Today'
+        : getDateTime(dateTime).day
+    ).toUpperCase()
+}
+
 export const getDateTime = (dateTime: string) => {
     const formatted_date = dayjs(dateTime)
     return {
-        year: formatted_date.get('y'),
-        month: formatted_date.get('M'),
-        day: formatted_date.get('d'),
+        day: formatted_date.format('ddd'),
         time: formatted_date.format('hh:mm A'),
         epoch: formatted_date.unix(),
     }

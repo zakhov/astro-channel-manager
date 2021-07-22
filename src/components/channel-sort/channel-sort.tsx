@@ -13,10 +13,16 @@ const ChannelFilter: React.FC<TChannelFilterProps> = ({
     const [value, setValue] = useState(default_option.value)
 
     return (
-        <Box direction="row" alignSelf="end" gap="small">
+        <Box
+            direction="row"
+            alignSelf="end"
+            align="center"
+            gap="small"
+            width="260px"
+        >
             <Filter
                 onClick={() => setOpen(!open)}
-                size="large"
+                size="28px"
                 color="icon"
                 cursor="pointer"
             />
