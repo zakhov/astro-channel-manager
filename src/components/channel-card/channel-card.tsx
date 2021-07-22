@@ -22,23 +22,31 @@ const ChannelCard: React.FC<TChannelCardProps> = ({
     return (
         <Card pad="medium" onClick={(e) => selectChannel(e, id)}>
             <CardHeader
-                border={{ size: 'small', side: 'bottom' }}
+                border={{
+                    size: 'small',
+                    side: 'bottom',
+                    color: 'status-disabled',
+                }}
                 pad={{ bottom: 'small' }}
             >
-                <Image
-                    fallback="https://via.placeholder.com/72x40.png"
-                    width="72px"
-                    height="40px"
-                    src={imageUrl}
-                />
-                <Text weight="bold">CH{stbNumber}</Text>
-                <Text weight="bold">{title}</Text>
+                <Box>
+                    <Image
+                        fallback="https://via.placeholder.com/72x40.png"
+                        width="72px"
+                        height="40px"
+                        src={imageUrl}
+                    />
+                </Box>
+                <Box justify="start" align="end">
+                    <Text weight={300}>CH{stbNumber}</Text>
+                    <Text weight="bold">{title}</Text>
+                </Box>
             </CardHeader>
             <CardBody>
                 <Box pad={{ vertical: 'small' }}>
                     {schedule.map((program: any, index: number) => (
                         <ChannelScheduleItem
-                            key={index}
+                            key={program.eventId}
                             index={index}
                             datetime={program.datetime}
                             title={program.title}
@@ -49,6 +57,8 @@ const ChannelCard: React.FC<TChannelCardProps> = ({
                             .fill(null)
                             .map(() => (
                                 <ChannelScheduleItem
+                                    // generate random number as key
+                                    key={Math.random().toString(6).substr(2, 4)}
                                     index={undefined}
                                     datetime={undefined}
                                     title={undefined}

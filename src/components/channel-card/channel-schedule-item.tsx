@@ -7,6 +7,7 @@ const ChannelScheduleItem: React.FC<TProgramProps> = ({
     datetime,
     title,
 }) => {
+    const is_first_item = index && index > 0
     return (
         <Grid
             fill
@@ -16,7 +17,10 @@ const ChannelScheduleItem: React.FC<TProgramProps> = ({
             gap="small"
         >
             <Box gridArea="date">
-                <Text>
+                <Text
+                    weight={!is_first_item ? 'bold' : 300}
+                    color={is_first_item ? 'text-xweak' : 'text-strong'}
+                >
                     {index === 0
                         ? 'On Now'
                         : datetime
@@ -25,7 +29,9 @@ const ChannelScheduleItem: React.FC<TProgramProps> = ({
                 </Text>
             </Box>
             <Box gridArea="title">
-                <Text>{title ?? 'No Information Available'}</Text>
+                <Text color={is_first_item ? 'text-xweak' : 'text-strong'}>
+                    {title ?? 'No Information Available'}
+                </Text>
             </Box>
         </Grid>
     )
