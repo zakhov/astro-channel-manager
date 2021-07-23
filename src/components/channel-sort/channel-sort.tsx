@@ -1,14 +1,14 @@
 import * as React from 'react'
 import { Box, Select } from 'grommet'
-import { Filter } from 'grommet-icons'
-import { FILTER_TYPES } from 'config'
+import { Sort } from 'grommet-icons'
+import { SORT_TYPES } from 'config'
 
-const ChannelFilter: React.FC<TChannelFilterProps> = ({
+const ChannelSort: React.FC<TChannelFilterProps> = ({
     default_option,
     onChange,
 }) => {
     const { useState } = React
-    const options = FILTER_TYPES
+    const options = SORT_TYPES
     const [open, setOpen] = useState(false)
     const [value, setValue] = useState(default_option.value)
 
@@ -20,7 +20,7 @@ const ChannelFilter: React.FC<TChannelFilterProps> = ({
             gap="small"
             width="260px"
         >
-            <Filter
+            <Sort
                 onClick={() => setOpen(!open)}
                 size="28px"
                 color="icon"
@@ -47,4 +47,4 @@ type TChannelFilterProps = {
     onChange: Function
 }
 
-export default ChannelFilter
+export default ChannelSort

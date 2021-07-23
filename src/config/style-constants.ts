@@ -26,13 +26,15 @@ const tabStyles = {
 }
 
 const colorStyles = {
-    focus: 'text-weak',
-    selected: 'text-weak',
+    colors: {
+        focus: 'text-weak',
+        selected: 'text-weak',
+    },
 }
 
 export const themeStyle = deepMerge(grommet, {
     global: {
-        colorStyles,
+        ...colorStyles,
     },
     ...tabStyles,
 })

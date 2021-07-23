@@ -7,9 +7,10 @@ export const fetchData = async (url: string): Promise<void> => {
 }
 
 export const isSameDay = (dateTime: string) => {
-    return (dayjs().format('ddd') === getDateTime(dateTime).day
-        ? 'Today'
-        : getDateTime(dateTime).day
+    return (
+        dayjs().format('ddd') === getDateTime(dateTime).day
+            ? 'Today'
+            : getDateTime(dateTime).day
     ).toUpperCase()
 }
 
@@ -45,7 +46,7 @@ export const sortChannels = (channels_list: any, sort_type: string) => {
     return sortedChannels
 }
 
-export const filteredSearch = (
+export const filteredInputSearch = (
     channels_list: any,
     search: string,
     keys: string[]
@@ -57,3 +58,26 @@ export const filteredSearch = (
         )
     })
 }
+
+export const filteredPropertySearch = (
+    is_boolean_search: boolean,
+    channels_list: any,
+    values: string[] | boolean,
+    key: string
+) => {
+    if (is_boolean_search || typeof values === 'boolean')
+        return channels_list.filter((channel: any) => !!channel[key])
+    return channels_list.filter((channel: any) =>
+        values.some((value) =>
+            !value ? true : String(channel[key]).includes(value)
+        )
+    )
+}
+
+export const getUniqueValuesByKey = (list: any, key: any) =>
+    list
+        .map((item: any) => item[key])
+        .filter(
+            (value: any, index: number, self: any) =>
+                self.indexOf(value) === index
+        )
