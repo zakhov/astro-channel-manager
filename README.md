@@ -6,7 +6,7 @@ This project pulls feed of channel listings and schedules from Astro's API and l
 
 https://astro-channels.surge.sh
 
-Test link deployment was done with [surge.sh](surge.sh)
+Test link deployment was done with [surge.sh](https://surge.sh)
 
 ## TODOs that couldn't be implemented due to time constraints
 
