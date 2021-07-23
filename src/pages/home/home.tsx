@@ -1,5 +1,12 @@
 import * as React from 'react'
-import { Box, Grid, InfiniteScroll, Spinner, ResponsiveContext } from 'grommet'
+import {
+    Box,
+    Grid,
+    CheckBox,
+    InfiniteScroll,
+    Spinner,
+    ResponsiveContext,
+} from 'grommet'
 import { Filter } from 'grommet-icons'
 import ChannelCard from 'components/channel-card'
 import ChannelSort from 'components/channel-sort/channel-sort'
@@ -8,6 +15,7 @@ import {
     sortChannels,
     filteredInputSearch,
     filteredPropertySearch,
+    getFavouritesFromStorage,
 } from 'helpers'
 import { ALL_CHANNELS } from 'config'
 import ChannelSearch from 'components/channel-search/channel-search'
@@ -17,6 +25,7 @@ const Home: React.FC = () => {
     const { useContext, useEffect, useState } = React
     const [channels_list, setChannelsList] = useState([])
     const [is_fetching, setIsFetching] = useState(true)
+    const [show_favourites, setShowFavourites] = useState(false)
     const [show_filters, setShowFilters] = useState(false)
     const [applied_filters, setAppliedFilters] = useState({
         category: [],
@@ -48,6 +57,14 @@ const Home: React.FC = () => {
         return 3
     }, [size])
 
+    const favourites_list_filter = channels_list.filter((channel: any) => {
+        const favourites = getFavouritesFromStorage()
+        if (Array.isArray(favourites)) {
+            return favourites.includes(String(channel.stbNumber))
+        }
+        return channels_list
+    })
+
     const category_list_filter =
         applied_filters.category.length > 0
             ? filteredPropertySearch(
@@ -78,7 +95,7 @@ const Home: React.FC = () => {
         : language_list_filter
 
     const filtered_search_list = filteredInputSearch(
-        resolution_list_filter,
+        show_favourites ? favourites_list_filter : resolution_list_filter,
         search_input,
         ['title', 'stbNumber']
     )
@@ -120,6 +137,20 @@ const Home: React.FC = () => {
                     </Box>
                     <ChannelSearch onChange={onSearch} />
                 </Box>
+                <Box>
+                    {' '}
+                    <CheckBox
+                        color="text-weak"
+                        name="favourites"
+                        label="Only Favourites"
+                        checked={show_favourites}
+                        onChange={(
+                            event: React.ChangeEvent<HTMLInputElement>
+                        ) => {
+                            setShowFavourites(event.target.checked)
+                        }}
+                    />
+                </Box>
                 <ChannelSort
                     default_option={{
                         label: 'Channel Number',
@@ -151,10 +182,7 @@ const Home: React.FC = () => {
             {show_filters && (
                 <ChannelFilterModal
                     default_values={applied_filters}
-                    onApply={(x: any) => {
-                        console.log(x)
-                        setAppliedFilters(x)
-                    }}
+                    onApply={(x: any) => setAppliedFilters(x)}
                     channels_list={channels_list}
                     size={size}
                     onClose={() => setShowFilters(false)}

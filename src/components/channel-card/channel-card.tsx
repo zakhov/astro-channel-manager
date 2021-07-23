@@ -22,7 +22,12 @@ const ChannelCard: React.FC<TChannelCardProps> = ({
     const schedule = currentSchedule.slice(0, 3)
 
     return (
-        <Card pad="medium" onClick={(e) => selectChannel(e, id)}>
+        <Card
+            elevation="xsmall"
+            pad="medium"
+            onClick={(e) => selectChannel(e, id)}
+            hoverIndicator={{ elevation: 'medium' }}
+        >
             <CardHeader
                 border={{
                     size: 'small',

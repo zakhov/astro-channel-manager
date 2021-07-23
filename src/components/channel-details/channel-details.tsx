@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {
     Box,
+    Button,
     Card,
     CardHeader,
     CardBody,
@@ -9,6 +10,13 @@ import {
     Text,
 } from 'grommet'
 import ChannelSchedule from './channel-schedule'
+import { Add, Checkmark } from 'grommet-icons'
+import {
+    getFavouritesFromStorage,
+    isFavouriteChannel,
+    removeChannelFromFavouritesStorage,
+    saveFavouritesInStorage,
+} from 'helpers'
 
 const ChannelDetails: React.FC<TChannelDetailsProps> = ({
     id,
@@ -24,6 +32,28 @@ const ChannelDetails: React.FC<TChannelDetailsProps> = ({
     imageUrl,
     schedule,
 }) => {
+    const { useState } = React
+
+    const [isFavourite, setIsFavourite] = useState(
+        isFavouriteChannel(stbNumber)
+    )
+
+    const toggleFavouriteChannel = (stbNumber: string) => {
+        const favourites = getFavouritesFromStorage()
+        if (Array.isArray(favourites)) {
+            if (isFavouriteChannel(stbNumber)) {
+                removeChannelFromFavouritesStorage(stbNumber)
+                setIsFavourite(false)
+            } else {
+                saveFavouritesInStorage(stbNumber)
+                setIsFavourite(true)
+            }
+        } else {
+            saveFavouritesInStorage(stbNumber)
+            setIsFavourite(true)
+        }
+    }
+
     return (
         <Card pad="medium">
             <CardHeader
@@ -36,12 +66,35 @@ const ChannelDetails: React.FC<TChannelDetailsProps> = ({
             >
                 <Box direction="row" width="100%" justify="between">
                     <Box direction="row">
-                        <Image
-                            fallback="https://via.placeholder.com/72x40.png"
-                            width="72px"
-                            height="40px"
-                            src={imageUrl}
-                        />
+                        <Box align="center" justify="start">
+                            <Image
+                                fallback="https://via.placeholder.com/72x40.png"
+                                width="72px"
+                                height="40px"
+                                src={imageUrl}
+                            />
+                            <Box
+                                pad={{ top: 'small' }}
+                                style={{ outline: 'none', boxShadow: 'none' }}
+                            >
+                                <Button
+                                    icon={
+                                        isFavourite ? (
+                                            <Checkmark size="medium" />
+                                        ) : (
+                                            <Add size="medium" />
+                                        )
+                                    }
+                                    size="small"
+                                    primary
+                                    color={isFavourite ? 'dark-1' : 'light-2'}
+                                    label="Favourite"
+                                    onClick={() =>
+                                        toggleFavouriteChannel(stbNumber)
+                                    }
+                                ></Button>
+                            </Box>
+                        </Box>
                         <Box
                             justify="start"
                             align="start"

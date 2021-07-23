@@ -46,6 +46,36 @@ export const sortChannels = (channels_list: any, sort_type: string) => {
     return sortedChannels
 }
 
+export const getFavouritesFromStorage = () => {
+    const favourites = localStorage.getItem('favourites')
+    if (favourites) return JSON.parse(favourites)
+    return undefined
+}
+
+export const saveFavouritesInStorage = (value: any) => {
+    const favourites = getFavouritesFromStorage()
+    const list = Array.isArray(favourites) ? [...favourites] : []
+    if (!list.includes(value)) {
+        list.push(value)
+    }
+    localStorage.setItem('favourites', JSON.stringify(list))
+}
+
+export const removeChannelFromFavouritesStorage = (value: any) => {
+    const favourites = getFavouritesFromStorage()
+    if (!Array.isArray(favourites)) return
+    const list = favourites.filter((channel: any) => channel !== value)
+    localStorage.setItem('favourites', JSON.stringify(list))
+}
+
+export const isFavouriteChannel = (stbNumber: string) => {
+    const favourites = getFavouritesFromStorage()
+    if (Array.isArray(favourites)) {
+        return favourites.includes(stbNumber)
+    }
+    return false
+}
+
 export const filteredInputSearch = (
     channels_list: any,
     search: string,
