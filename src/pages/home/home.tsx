@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Box, Grid, InfiniteScroll, ResponsiveContext } from 'grommet'
+import { Box, Grid, InfiniteScroll, Spinner, ResponsiveContext } from 'grommet'
 import { Filter } from 'grommet-icons'
 import ChannelCard from 'components/channel-card'
 import ChannelSort from 'components/channel-sort/channel-sort'
@@ -85,6 +85,17 @@ const Home: React.FC = () => {
 
     const sorted_list = sortChannels(filtered_search_list, sortType)
 
+    if (is_fetching)
+        return (
+            <Box
+                align="center"
+                justify="center"
+                style={{ height: 'calc(100vh - 1.6rem)' }}
+            >
+                <Spinner color="text-weak" size="large" />
+            </Box>
+        )
+
     return (
         <Box pad="small" width="xxlarge">
             <Box
@@ -137,7 +148,7 @@ const Home: React.FC = () => {
                     )}
                 </InfiniteScroll>
             </Grid>
-            {!is_fetching && show_filters && (
+            {show_filters && (
                 <ChannelFilterModal
                     default_values={applied_filters}
                     onApply={(x: any) => {

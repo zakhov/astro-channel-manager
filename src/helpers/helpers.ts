@@ -53,9 +53,11 @@ export const filteredInputSearch = (
 ) => {
     const lowerCaseSearch = search.toLowerCase()
     return channels_list.filter((channel: any) => {
-        return keys.some((key) =>
-            String(channel[key]).toLowerCase().includes(lowerCaseSearch)
-        )
+        return keys.some((key) => {
+            let keyword = String(channel[key]).toLowerCase()
+            if (key === 'stbNumber') keyword = 'ch'.concat(keyword)
+            return keyword.includes(lowerCaseSearch)
+        })
     })
 }
 
