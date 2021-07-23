@@ -93,14 +93,21 @@ const Home: React.FC = () => {
                 justify="between"
                 style={{ flexFlow: 'wrap' }}
             >
-                <Box>
-                    <ChannelSearch onChange={onSearch} />
-                    <Filter
-                        style={{ paddingLeft: 'small' }}
-                        size="medium"
-                        color="text-weak"
+                <Box direction="row" align="center" justify="center">
+                    <Box
+                        border="all"
+                        round="xsmall"
+                        fill="vertical"
+                        pad={{ horizontal: 'xsmall' }}
+                        margin={{ right: 'xsmall' }}
+                        align="center"
+                        justify="center"
+                        style={{ cursor: 'pointer' }}
                         onClick={() => setShowFilters(true)}
-                    />
+                    >
+                        <Filter size="36px" color="text-weak" />
+                    </Box>
+                    <ChannelSearch onChange={onSearch} />
                 </Box>
                 <ChannelSort
                     default_option={{
